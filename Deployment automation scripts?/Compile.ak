@@ -1,0 +1,22 @@
+aiken build
+import { BlockfrostProvider, MintingPolicy } from '@meshsdk/core';
+import { readFileSync } from 'fs';
+
+const blockfrost = new BlockfrostProvider({
+  projectId: 'your_blockfrost_project_id', // Replace with your Blockfrost Project ID
+});
+
+// Load compiled Aiken script
+const compiledScript = JSON.parse(readFileSync('./output/listing.json', 'utf-8'));
+
+const deployListingValidator = async () => {
+  const mintingPolicy = new MintingPolicy({
+    type: 'PlutusV2',
+    script: compiledScript.cborHex,
+  });
+
+  const txHash = await blockfrost.submitMintingPolicy(mintingPolicy);
+  console.log(`Listing validator deployed! TX hash: ${txHash}`);
+};
+
+deployListingValidator();

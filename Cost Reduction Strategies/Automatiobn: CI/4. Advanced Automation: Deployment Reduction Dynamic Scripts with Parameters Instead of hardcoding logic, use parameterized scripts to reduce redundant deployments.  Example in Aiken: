@@ -1,0 +1,36 @@
+### Advanced Automation: Deployment Reduction
+
+Dynamic Scripts with Parameters
+Instead of hardcoding logic, use parameterized scripts to reduce redundant deployments.
+
+Example in Aiken:
+
+...
+
+validator dynamic_validator (ctx: ScriptContext, params: DynamicParams) -> Bool {
+    match params.action {
+        ListNFT -> validate_listing(ctx, params.details),
+        Auction -> validate_auction(ctx, params.details),
+        _ -> false
+    }
+}
+
+pub type DynamicParams = {
+    action: Action,
+    details: Datum
+}
+
+pub type Action =
+    | ListNFT
+    | Auction
+
+
+...
+Deploy a single script and pass DynamicParams to reuse it.
+
+### Monitoring and Analytics
+
+Deploy scripts integrated with Blockfrost Webhooks for real-time updates:
+
+   1. Get notifications for successful transactions.
+   2. Automate metadata updates upon event triggers.

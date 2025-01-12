@@ -1,0 +1,18 @@
+name = "aiken-lang/advanced-nft-marketplace"
+version = "0.0.0"
+compiler = "v1.1.7"
+plutus = "v3"
+license = "Apache-2.0"
+description = "Aiken contracts for project 'aiken-lang/advanced-nft-marketplace'"
+
+[repository]
+user = "aiken-lang"
+project = "advanced-nft-marketplace"
+platform = "github"
+
+[[dependencies]]
+name = "aiken-lang/stdlib"
+version = "v2.1.0"
+source = "github"
+
+[config]

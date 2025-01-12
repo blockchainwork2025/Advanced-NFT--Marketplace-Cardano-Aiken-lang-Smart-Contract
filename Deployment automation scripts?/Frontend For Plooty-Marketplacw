@@ -1,0 +1,41 @@
+import { useWallet } from '@meshsdk/react';
+import { Transaction } from '@meshsdk/core';
+
+const contractAddress = 'script_address'; // Replace with deployed script address
+
+function App() {
+  const { connected, connect, wallet } = useWallet();
+
+  const listNFT = async () => {
+    if (!connected) {
+      await connect();
+    }
+
+    const tx = new Transaction();
+    tx.addOutput({
+      address: contractAddress,
+      value: { lovelace: '2000000' },
+      datum: {
+        json: {
+          id: 'nft123',
+          owner: wallet.address,
+          price: 5000000,
+          metadata: 'ipfs://someHash',
+          status: 'Active',
+        },
+      },
+    });
+
+    const signedTx = await wallet.signTx(tx);
+    const txHash = await wallet.submitTx(signedTx);
+    console.log(`NFT listed! TX hash: ${txHash}`);
+  };
+
+  return (
+    <div>
+      <button onClick={listNFT}>List NFT</button>
+    </div>
+  );
+}
+
+export default App;
